@@ -6,7 +6,7 @@ import Loader from "./components/Loader/Loader";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import MovieModal from "./components/MovieModal/MovieModal";
 
-import { Movie } from "./types/movie";
+import type { Movie } from "./types/movie";
 import { fetchMovies } from "./services/movieService";
 
 import toast, { Toaster } from "react-hot-toast";
