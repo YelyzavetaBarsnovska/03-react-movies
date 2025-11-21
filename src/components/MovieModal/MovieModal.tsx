@@ -10,6 +10,7 @@ export interface MovieModalProps {
 
 export default function MovieModal({ movie, onClose }: MovieModalProps) {
   useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     function onKeyDown(e: KeyboardEvent) {
@@ -20,11 +21,11 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
 
     return () => {
       window.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
     };
   }, [onClose]);
 
-  function handleBackdrop(e: React.MouseEvent) {
+  function handleBackdrop(e: React.MouseEvent<HTMLDivElement>) {
     if (e.target === e.currentTarget) onClose();
   }
 
@@ -46,7 +47,13 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
 
         <img
           className={styles.image}
-          src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+          src={
+            movie.backdrop_path
+              ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
+              : movie.poster_path
+              ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
+              : "https://via.placeholder.com/1200x675?text=No+Image"
+          }
           alt={movie.title}
         />
 
@@ -55,7 +62,7 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
           <p>{movie.overview}</p>
 
           <p>
-            <strong>Release Date:</strong> {movie.release_date}
+            <strong>Release Date:</strong> {movie.release_date || "Unknown"}
           </p>
 
           <p>

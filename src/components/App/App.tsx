@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import SearchBar from "../SearchBar/SearchBar";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import Loader from "../Loader/Loader";
@@ -30,7 +29,8 @@ export default function App() {
       }
 
       setMovies(data);
-    } catch {
+    } catch (err) {
+      console.error("Fetch error:", err);
       setError(true);
     } finally {
       setLoading(false);

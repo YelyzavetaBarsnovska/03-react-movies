@@ -10,11 +10,23 @@ export default function MovieGrid({ movies, onSelect }: MovieGridProps) {
   return (
     <ul className={styles.grid}>
       {movies.map((movie) => (
-        <li key={movie.id} onClick={() => onSelect(movie)}>
-          <div className={styles.card}>
+        <li key={movie.id}>
+          <div
+            className={styles.card}
+            role="button"
+            tabIndex={0}
+            onClick={() => onSelect(movie)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") onSelect(movie);
+            }}
+          >
             <img
               className={styles.image}
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+              src={
+                movie.poster_path
+                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                  : "https://via.placeholder.com/500x750?text=No+Image"
+              }
               alt={movie.title}
               loading="lazy"
             />
